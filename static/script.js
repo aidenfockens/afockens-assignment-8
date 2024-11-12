@@ -42,13 +42,13 @@ document.getElementById("experiment-form").addEventListener("submit", function(e
 
         const datasetImg = document.getElementById("dataset-img");
         if (data.dataset_img) {
-            datasetImg.src = `/${data.dataset_img}`;
+            datasetImg.src = data.dataset_img;
             datasetImg.style.display = "block";
         }
 
         const parametersImg = document.getElementById("parameters-img");
         if (data.parameters_img) {
-            parametersImg.src = `/${data.parameters_img}`;
+            parametersImg.src = data.parameters_img;
             parametersImg.style.display = "block";
         }
     })

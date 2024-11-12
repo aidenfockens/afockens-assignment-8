@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, send_from_directory
+from flask import Flask, render_template, request, jsonify, send_from_directory, url_for
 import os
 from logistic_regression import do_experiments
 
@@ -17,15 +17,16 @@ def run_experiment():
     step_num = int(request.json['step_num'])
 
     # Run the experiment with the provided parameters
-    do_experiments(start, end, step_num)
+    dataset_filename, parameters_filename = do_experiments(start, end, step_num)
 
-    # Check if result images are generated and return their paths
-    dataset_img = "results/dataset.png"
-    parameters_img = "results/parameters_vs_shift_distance.png"
-    
+    # Construct URLs to access the generated images
+    dataset_img_url = url_for('static', filename=dataset_filename)
+    parameters_img_url = url_for('static', filename=parameters_filename)
+    print(dataset_img_url)
+    print(parameters_img_url)
     return jsonify({
-        "dataset_img": dataset_img if os.path.exists(dataset_img) else None,
-        "parameters_img": parameters_img if os.path.exists(parameters_img) else None
+        "dataset_img": dataset_img_url,
+        "parameters_img": parameters_img_url
     })
 
 # Route to serve result images
